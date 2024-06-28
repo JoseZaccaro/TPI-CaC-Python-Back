@@ -1,5 +1,7 @@
 from flask import Flask
 from flask_cors import CORS
+from app.routes.cities import *
+from app.routes.hotels import *
 from app.views import *
 from app.database import init_app
 
