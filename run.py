@@ -10,7 +10,7 @@ init_app(app)
 CORS(app)
 
 app.route('/', methods=['GET'])(index)
-app.route('/api/movies/', methods=['GET'])(get_all_movies)
+app.route('/api/movies/', methods=['GET'])(get_all_cities)
 app.route('/api/movies/<int:movie_id>', methods=['GET'])(get_movie)
 app.route('/api/movies/', methods=['POST'])(create_movie)
 app.route('/api/movies/<int:movie_id>', methods=['PUT'])(update_movie)

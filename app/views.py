@@ -1,51 +1,48 @@
 from flask import jsonify, request
-from app.models import Movie
+from app.models.city import City
 
 def index():
     return '<h1>Hola mundo con flask 🐍</h1>'
 
-def get_all_movies():
+def get_all_cities():
     try:
-        movies = Movie.get_all()
-        list_movies = [movie.serialize() for movie in movies]
-        return jsonify(list_movies)
+        cities = City.get_all()
+        print(cities)
+        # list_cities = [city.serialize() for city in cities]
+        return jsonify(cities)
     except Exception as identifier:
         print(identifier)
         return jsonify([])
 
-def create_movie():
+def create_city():
     #recepcionando los datos enviados en la peticion en formato JSON
     data = request.json
-    new_movie = Movie(
-        title=data['title'],
-        director=data['director'],
-        release_date=data['release_date'],
-        banner=data['banner']
+    new_city = City(
+        name = data['name'],
+        hotels = data['hotels']
     )
-    new_movie.save()
-    return jsonify({'message':'Pelicula creada con exito'}), 201
+    new_city.save()
+    return jsonify({'message':'City created'}), 201
     
-def update_movie(movie_id):
-    movie = Movie.get_by_id(movie_id)
-    if not movie:
-        return jsonify({'message': 'Movie not found'}), 404
+def update_city(city_id):
+    city = City.get_by_id(city_id)
+    if not city:
+        return jsonify({'message': 'City not found'}), 404
     data = request.json
-    movie.title = data['title']
-    movie.director = data['director']
-    movie.release_date = data['release_date']
-    movie.banner = data['banner']
-    movie.save()
-    return jsonify({'message': 'Movie updated successfully'})
+    city.name = data['name']
+    city.hotels = data['hotels']
+    city.save()
+    return jsonify({'message': 'City updated successfully'})
 
-def get_movie(movie_id):
-    movie = Movie.get_by_id(movie_id)
-    if not movie:
-        return jsonify({'message': 'Movie not found'}), 404
-    return jsonify(movie.serialize())
+def get_city(city_id):
+    city = City.get_by_id(city_id)
+    if not city:
+        return jsonify({'message': 'City not found'}), 404
+    return jsonify(city.serialize())
 
-def delete_movie(movie_id):
-    movie = Movie.get_by_id(movie_id)
-    if not movie:
-        return jsonify({'message': 'Movie not found'}), 404
-    movie.delete()
-    return jsonify({'message': 'Movie deleted successfully'})
+def delete_city(city_id):
+    city = City.get_by_id(city_id)
+    if not city:
+        return jsonify({'message': 'City not found'}), 404
+    city.delete()
+    return jsonify({'message': 'City deleted successfully'})
