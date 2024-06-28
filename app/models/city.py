@@ -2,16 +2,14 @@ from app.database import get_db
 class City:
 
     #constuctor
-    def __init__(self,id_city=None,name=None,hotels=None):
+    def __init__(self,id_city=None,name=None):
         self.id_city=id_city
         self.name=name
-        self.hotels=hotels
     
     def serialize(self):
         return {
             'id_city': self.id_city,
             'name': self.name,
-            'hotels': self.hotels
         }
 
 
@@ -23,11 +21,11 @@ class City:
         cursor.execute(query)
         rows = cursor.fetchall() #Me devuelve un lista de tuplas
 
-        # cities = [City(id_city=row[0], name=row[1], hotels=row[2]) for row in rows]
+        # cities = [City(id_city=row[0], name=row[1]) for row in rows]
 
         cities = []
         for row in rows:
-            new_city = City(id_city=row[0], name=row[1], hotels=row[2])
+            new_city = City(id_city=row[0], name=row[1])
             cities.append(new_city)
 
         cursor.close()
@@ -41,15 +39,15 @@ class City:
         row = cursor.fetchone()
         cursor.close()
         if row:
-            return City(id_city=row[0], name=row[1], hotels=row[2])
+            return City(id_city=row[0], name=row[1])
         return None
 
     def save(self):
         db = get_db()
         cursor = db.cursor()
         cursor.execute("""
-            INSERT INTO cities (name, hotels) VALUES (%s, %s)
-        """, (self.name, self.hotels))
+            INSERT INTO cities (name) VALUES (%s)
+        """, (self.name))
         db.commit()
         cursor.close()
 
@@ -60,3 +58,23 @@ class City:
         db.commit()
         cursor.close()
 
+    def update(self):
+        db = get_db()
+        cursor = db.cursor()
+        cursor.execute("""
+            UPDATE cities
+            SET name = %s
+            WHERE id_city = %s
+        """, (self.name, self.id_city))
+        db.commit()
+        cursor.close()
+        
+    def get_by_name(name):
+        db = get_db()
+        cursor = db.cursor()
+        cursor.execute("SELECT * FROM cities WHERE name = %s", (name,))
+        row = cursor.fetchone()
+        cursor.close()
+        if row:
+            return City(id_city=row[0], name=row[1])
+        return None

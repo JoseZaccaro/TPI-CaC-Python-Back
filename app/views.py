@@ -7,9 +7,8 @@ def index():
 def get_all_cities():
     try:
         cities = City.get_all()
-        print(cities)
-        # list_cities = [city.serialize() for city in cities]
-        return jsonify(cities)
+        list_cities = [city.serialize() for city in cities]
+        return jsonify(list_cities)
     except Exception as identifier:
         print(identifier)
         return jsonify([])
@@ -19,7 +18,6 @@ def create_city():
     data = request.json
     new_city = City(
         name = data['name'],
-        hotels = data['hotels']
     )
     new_city.save()
     return jsonify({'message':'City created'}), 201

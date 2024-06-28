@@ -10,11 +10,11 @@ init_app(app)
 CORS(app)
 
 app.route('/', methods=['GET'])(index)
-app.route('/api/movies/', methods=['GET'])(get_all_cities)
-app.route('/api/movies/<int:movie_id>', methods=['GET'])(get_movie)
-app.route('/api/movies/', methods=['POST'])(create_movie)
-app.route('/api/movies/<int:movie_id>', methods=['PUT'])(update_movie)
-app.route('/api/movies/<int:movie_id>', methods=['DELETE'])(delete_movie)
+app.route('/api/cities/', methods=['GET'])(get_all_cities)
+app.route('/api/cities/<int:city_id>', methods=['GET'])(get_city)
+app.route('/api/cities/', methods=['POST'])(create_city)
+app.route('/api/cities/<int:city_id>', methods=['PUT'])(update_city)
+app.route('/api/cities/<int:city_id>', methods=['DELETE'])(delete_city)
 
 if __name__=='__main__':
     app.run(debug=True)
