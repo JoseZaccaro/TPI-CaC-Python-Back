@@ -47,7 +47,7 @@ class City:
         cursor = db.cursor()
         cursor.execute("""
             INSERT INTO cities (name) VALUES (%s)
-        """, (self.name))
+        """, (self.name,))
         db.commit()
         cursor.close()
 
