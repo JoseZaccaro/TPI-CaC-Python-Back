@@ -49,3 +49,17 @@ def delete_hotel(hotel_id):
         return jsonify({'message': 'Hotel not found'}), 404
     hotel.delete()
     return jsonify({'message': 'Hotel deleted successfully'})
+
+
+def get_all_hotels():
+    try:
+        city_id = request.args.get('city_id')
+        if city_id:
+            hotels = Hotel.get_by_city_id(city_id)
+        else:
+            hotels = Hotel.get_all()
+        list_hotels = [hotel.serialize() for hotel in hotels]
+        return jsonify(list_hotels)
+    except Exception as e:
+        print(e)
+        return jsonify([])

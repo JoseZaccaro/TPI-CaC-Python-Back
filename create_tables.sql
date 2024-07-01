@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS cities (
     id_city INTEGER PRIMARY KEY AUTO_INCREMENT,
-    name TEXT NOT NULL,
+    name TEXT NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS hotels (
@@ -23,3 +23,12 @@ CREATE TABLE IF NOT EXISTS rooms (
     FOREIGN KEY (id_hotel) REFERENCES hotels(id_hotel)
 );
 
+CREATE TABLE IF NOT EXISTS reservations (
+    id_reservation INTEGER PRIMARY KEY AUTO_INCREMENT,
+    id_room INTEGER NOT NULL,
+    dni VARCHAR(20) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    fecha_inicio DATE NOT NULL,
+    fecha_fin DATE NOT NULL,
+    FOREIGN KEY (id_room) REFERENCES rooms(id_room)
+);

@@ -93,3 +93,14 @@ class Hotel:
             return Hotel(id_hotel=row[0], name=row[1], address=row[2], description=row[3], image=row[4], id_city=row[5])
         return None
     
+    @staticmethod
+    def get_by_city(city_id):
+        db = get_db()
+        cursor = db.cursor()
+        query = "SELECT * FROM hotels WHERE id_city = %s"
+        cursor.execute(query, (city_id,))
+        rows = cursor.fetchall()
+        hotels = [Hotel(id_hotel=row[0], name=row[1], address=row[2], description=row[3], image=row[4], id_city=row[5]) for row in rows]
+        cursor.close()
+        print(f"Hoteles en la ciudad {city_id}: {hotels}")  # Imprimir para verificar los datos
+        return hotels

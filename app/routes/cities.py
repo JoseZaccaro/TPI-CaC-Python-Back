@@ -1,11 +1,16 @@
 from flask import jsonify, request
 from app.models.city import City
-
+from app.models.hotel import Hotel
 
 def get_all_cities():
     try:
         cities = City.get_all()
-        list_cities = [city.serialize() for city in cities]
+        list_cities = []
+        for city in cities:
+            city_data = city.serialize()
+            hotels = Hotel.get_by_city(city.id_city)
+            city_data['hotels'] = [hotel.serialize() for hotel in hotels]
+            list_cities.append(city_data)
         return jsonify(list_cities)
     except Exception as identifier:
         print(identifier)
