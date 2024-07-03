@@ -20,12 +20,12 @@ def create_reservation():
         fecha_fin=data['fecha_fin']
     )
     new_reservation.save()
-    return jsonify({'message': 'Reservation created'}), 201
+    return jsonify({'message': 'Reserva creada'}), 201
 
 def get_reservation(reservation_id):
     reservation = Reservation.get_by_id(reservation_id)
     if not reservation:
-        return jsonify({'message': 'Reservation not found'}), 404
+        return jsonify({'message': 'Reserva no encontrada'}), 404
     return jsonify(reservation.serialize())
 
 
@@ -43,12 +43,12 @@ def delete_reservation(reservation_id):
     try:
         reservation = Reservation.get_by_id(reservation_id)
         if not reservation:
-            return jsonify({'message': 'Reservation not found'}), 404
+            return jsonify({'message': 'Reserva no encontrada'}), 404
         reservation.delete()
-        return jsonify({'message': 'Reservation deleted successfully'})
+        return jsonify({'message': 'Reserva eliminada correctamente'})
     except Exception as e:
         print(e)
-        return jsonify({'message': 'Error deleting reservation'}), 500
+        return jsonify({'message': 'Erro al eliminar la reserva'}), 500
 
 
 reservations_bp = Blueprint('reservations', __name__, url_prefix='/api/reservations')
